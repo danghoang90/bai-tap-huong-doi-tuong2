@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="game"></div>
+<script>
+    function Zoro (image, left, right, up, down, size) {
+        this.image = image;
+        this.left = left;
+        this.right = right;
+        this.up = up;
+        this.down = down;
+        this.size = size;
+
+        this.getZoroElement = function () {
+            return '<img id="Zonoa" width="'+ this.size + '"' +
+                ' height="'+ this.size + '"' +
+                ' src="' + this.image +'"' +
+                ' style="top: '+this.up+'px; left:'+this.left+'px;right:'+this.right+'px;down:'+this.down+'px ;position:absolute;" />';
+        }
+        this.moveRight = function () {
+            this.left +=50;
+        }
+        this.moveLeft = function () {
+            this.left -= 50;
+        }
+        this.moveUp = function () {
+            this.up -=50;
+        }
+        this.moveDown = function () {
+            this.up += 50;
+        }
+    }
+    let zoro = new Zoro('zoro.jpeg', 0,0,0,0, 100);
+    function start(){
+        document.getElementById('game').innerHTML = zoro.getZoroElement();
+        let rec = document.getElementById('Zonoa').getBoundingClientRect();
+        console.log(rec.left, rec.top);
+        if (rec.top == 0 && rec.left < 500) zoro.moveRight();
+        if (rec.left >= 500 && rec.top < 500) zoro.moveDown();
+        if (rec.top >= 500 && rec.left > 0) zoro.moveLeft();
+        if (rec.top > 0 && rec.left <= 0)  zoro.moveUp();
+
+        setTimeout(start, 500)
+    }
+
+    start();
+</script>
+</body>
+</html>
